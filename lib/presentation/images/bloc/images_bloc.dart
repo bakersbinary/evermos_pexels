@@ -3,7 +3,6 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:evermos_pexels/domain/entity/images_entity.dart';
 import 'package:evermos_pexels/domain/usecase/curated_usecase.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -30,6 +29,16 @@ class ImagesBloc extends Bloc<ImagesEvent, ImagesState> {
       _onImagesFetched,
       transformer: throttleDroppable(throttleDuration),
     );
+    on<ImagesRefresh>(_onImagesRefresh);
+  }
+
+  Future<void> _onImagesRefresh(
+    ImagesEvent event,
+    Emitter<ImagesState> emit,
+  ) async {
+    page = 1;
+    state.data.clear();
+    emit(state.copyWith(status: ImagesStatus.initial));
   }
 
   Future<void> _onImagesFetched(
@@ -39,17 +48,14 @@ class ImagesBloc extends Bloc<ImagesEvent, ImagesState> {
     final onEvent = event as ImagesFetched;
     final data = await useCase.getImages(onEvent.page);
 
-    data?.fold(
+    data.fold(
       (failure) {
-        emit(
-          state.copyWith(
-            status: ImagesStatus.failure,
-          ),
-        );
+        emit(state.copyWith(status: ImagesStatus.failure));
       },
       (images) {
         final isEmpty = images.isEmpty;
-        final newData = state.data.isEmpty ? images : [...state.data, ...images];
+        final newData =
+            state.data.isEmpty ? images : [...state.data, ...images];
         emit(
           isEmpty
               ? state.copyWith(hasReachedMax: true)

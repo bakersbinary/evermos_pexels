@@ -10,3 +10,5 @@ final class ImagesFetched extends ImagesEvent {
 
   ImagesFetched({required this.page});
 }
+
+final class ImagesRefresh extends ImagesEvent {}

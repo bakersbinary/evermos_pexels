@@ -1,82 +1,6 @@
-import 'package:evermos_pexels/domain/entity/images_entity.dart';
+import 'package:evermos_pexels/domain/entity/image_detail_entity.dart';
 
-class Images {
-  int? _page;
-  int? _perPage;
-  List<Photos>? _photos;
-  int? _totalResults;
-  String? _nextPage;
-
-  Images(
-      {int? page,
-      int? perPage,
-      List<Photos>? photos,
-      int? totalResults,
-      String? nextPage}) {
-    if (page != null) {
-      _page = page;
-    }
-    if (perPage != null) {
-      _perPage = perPage;
-    }
-    if (photos != null) {
-      _photos = photos;
-    }
-    if (totalResults != null) {
-      _totalResults = totalResults;
-    }
-    if (nextPage != null) {
-      _nextPage = nextPage;
-    }
-  }
-
-  int? get page => _page;
-
-  set page(int? page) => _page = page;
-
-  int? get perPage => _perPage;
-
-  set perPage(int? perPage) => _perPage = perPage;
-
-  List<Photos>? get photos => _photos;
-
-  set photos(List<Photos>? photos) => _photos = photos;
-
-  int? get totalResults => _totalResults;
-
-  set totalResults(int? totalResults) => _totalResults = totalResults;
-
-  String? get nextPage => _nextPage;
-
-  set nextPage(String? nextPage) => _nextPage = nextPage;
-
-  Images.fromJson(Map<String, dynamic> json) {
-    _page = json['page'];
-    _perPage = json['per_page'];
-    if (json['photos'] != null) {
-      _photos = <Photos>[];
-      json['photos'].forEach((v) {
-        _photos!.add(new Photos.fromJson(v));
-      });
-    }
-    _totalResults = json['total_results'];
-    _nextPage = json['next_page'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['page'] = _page;
-    data['per_page'] = _perPage;
-    if (_photos != null) {
-      data['photos'] = _photos!.map((v) => v.toJson()).toList();
-    }
-    data['total_results'] = _totalResults;
-    data['next_page'] = _nextPage;
-    return data;
-  }
-}
-
-class Photos {
+class ImageDetail {
   int? _id;
   int? _width;
   int? _height;
@@ -89,7 +13,7 @@ class Photos {
   bool? _liked;
   String? _alt;
 
-  Photos(
+  ImageDetail(
       {int? id,
       int? width,
       int? height,
@@ -181,7 +105,7 @@ class Photos {
 
   set alt(String? alt) => _alt = alt;
 
-  Photos.fromJson(Map<String, dynamic> json) {
+  ImageDetail.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _width = json['width'];
     _height = json['height'];
@@ -213,9 +137,9 @@ class Photos {
     return data;
   }
 
-  ImagesEntity toEntity() => ImagesEntity(
-        id: id ?? 0,
+  ImageDetailEntity toEntity() => ImageDetailEntity(
         image: src?.medium ?? '',
+        photo: photographerUrl ?? '',
         name: photographer ?? '',
       );
 }

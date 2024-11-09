@@ -4,15 +4,11 @@ class ImagesEntity extends Equatable {
   final int id;
   final String image;
   final String name;
-  final String photo;
-  final bool isLike;
 
-  ImagesEntity({
+  const ImagesEntity({
     required this.id,
     required this.image,
     required this.name,
-    required this.photo,
-    required this.isLike,
   });
 
   @override
@@ -20,7 +16,5 @@ class ImagesEntity extends Equatable {
         id,
         image,
         name,
-        photo,
-        isLike,
       ];
 }

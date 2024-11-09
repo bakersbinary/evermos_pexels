@@ -8,7 +8,7 @@ class CuratedUseCase {
 
   CuratedUseCase(this.curatedRepository);
 
-  Future<Either<Failure, List<ImagesEntity>>>? getImages(int page) {
+  Future<Either<Failure, List<ImagesEntity>>> getImages(int page) {
     return curatedRepository.getImages(page);
   }
 }

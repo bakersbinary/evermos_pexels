@@ -18,9 +18,6 @@ class CuratedRepositoryImpl implements CuratedRepository {
           response.photos?.map((item) => item.toEntity()).toList() ?? [];
       return Right(data);
     } on Exception catch (e) {
-      if (kDebugMode) {
-        print('ERROR $e');
-      }
       return const Left(
         GeneralFailure(400, 'error'),
       );
